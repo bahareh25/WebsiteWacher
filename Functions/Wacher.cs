@@ -26,13 +26,13 @@ public class Wacher(ILoggerFactory loggerFactory, PdfCreatorService pdfCreatorSe
             HtmlDocument doc = web.Load(website.Url);
             var divewithcontent = doc.DocumentNode.SelectSingleNode(website.xPathExpression);
             var content = divewithcontent != null ? divewithcontent.InnerHtml.Trim() : "No Content";
-            content = content.Replace("Microsoft Entra", "Azure AD");
+           // content = content.Replace("Microsoft Entra", "Azure AD");
             var contentChanged = content != website.LatestContext;
             if (contentChanged)
             {
                 _logger.LogInformation("content changed");
                 var newPdfStream = await pdfCreatorService.ConvertPageToPdfAsync(website.Url);
-                var connectionstring = Environment.GetEnvironmentVariable("ConnectionStrings:WebSiteWacherStorage");
+                var connectionstring = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
                 var blobclient = new Azure.Storage.Blobs.BlobClient(connectionstring, "pdfs", $"{website.id}-{DateTime.UtcNow:MMddyyyyhhmmss}.pdf");
                 await blobclient.UploadAsync(newPdfStream);
                 _logger.LogInformation($"PDF created for URL: {website.Url}, PDF Size: {newPdfStream.Length} bytes");

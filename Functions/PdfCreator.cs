@@ -29,7 +29,7 @@ public class PdfCreator(ILoggerFactory loggerFactory, PdfCreatorService pdfCreat
                 var pdfStream = await pdfCreatorService.ConvertPageToPdfAsync(change.Item.Url);
 
                 _logger.LogInformation($"PDF created for URL: {change.Item.Url}, PDF Size: {pdfStream.Length} bytes");
-                var connectionstring = Environment.GetEnvironmentVariable("ConnectionStrings:WebSiteWacherStorage");
+                var connectionstring = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
                 var blobclient = new Azure.Storage.Blobs.BlobClient(connectionstring, "pdfs", $"{change.Item.id}.pdf");
                 await blobclient.UploadAsync(pdfStream);
             }
