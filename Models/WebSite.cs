@@ -10,6 +10,6 @@ namespace WebsiteWacher.Models
     {
         public Guid id { get; set; }
         public string Url { get; set; }
-        public string xPathExpression { get; set; }
+        public string? xPathExpression { get; set; }
     }
 }
