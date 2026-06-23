@@ -26,7 +26,7 @@ namespace WebsiteWacher
             if (string.IsNullOrEmpty(url) || !isValidUrl(url))
             {
                 var responce = request.CreateResponse(System.Net.HttpStatusCode.BadRequest);
-                await responce.WriteStringAsync("Invalid URL provided1.");
+                await responce.WriteStringAsync("Invalid URL provided.");
                // return;
             }
             else
