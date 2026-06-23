@@ -27,19 +27,23 @@ namespace WebsiteWacher
             {
                 var responce = request.CreateResponse(System.Net.HttpStatusCode.BadRequest);
                 await responce.WriteStringAsync("Invalid URL provided.");
-                return;
-            }
-            var saferesuiltCheck = safeBrowsingService.CheckUrl(url);
-            if(saferesuiltCheck.HasThreat)
-            {
-                var responce = request.CreateResponse(System.Net.HttpStatusCode.BadRequest);
-                await responce.WriteStringAsync($"URL is flagged as unsafe. Threat type: {string.Join(", ", saferesuiltCheck.ThreatType)}");
-                return;
+               // return;
             }
             else
             {
                 await next(context);
             }
+            //var saferesuiltCheck = safeBrowsingService.CheckUrl(url);
+            //if(saferesuiltCheck.HasThreat)
+            //{
+            //    var responce = request.CreateResponse(System.Net.HttpStatusCode.BadRequest);
+            //    await responce.WriteStringAsync($"URL is flagged as unsafe. Threat type: {string.Join(", ", saferesuiltCheck.ThreatType)}");
+            //    return;
+            //}
+            //else
+            //{
+            //    await next(context);
+            //}
         }
         private bool isValidUrl(string url)
         {
